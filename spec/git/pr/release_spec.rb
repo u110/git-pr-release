@@ -75,18 +75,21 @@ RSpec.describe Git::Pr::Release do
     context "new pr added and keeping task status" do
       it {
         actual = merge_pr_body(<<~OLD_BODY, <<~NEW_BODY)
+          - [ ] #2 hoge @u110
           - [x] #4 use user who create PR if there is no assignee @hakobe
           - [x] #6 Support two factor auth @ninjinkun
         OLD_BODY
+          - [ ] #2 renamed hoge @u110
           - [ ] #3 Provides a creating release pull-request object for template @hakobe
           - [ ] #4 use user who create PR if there is no assignee @hakobe
-          - [ ] #6 Support two factor auth @ninjinkun
+          - [ ] #6 renamed Support two factor auth @ninjinkun
         NEW_BODY
 
         expect(actual).to eq <<~MARKDOWN.chomp
+          - [ ] #2 renamed hoge @u110
           - [ ] #3 Provides a creating release pull-request object for template @hakobe
           - [x] #4 use user who create PR if there is no assignee @hakobe
-          - [x] #6 Support two factor auth @ninjinkun
+          - [x] #6 renamed Support two factor auth @ninjinkun
         MARKDOWN
       }
     end
